@@ -9,6 +9,12 @@ delta = {
         pg.K_RIGHT: (1, 0), 
         }
 accs = [a for a in range(1, 11)]
+bb_imgs = []
+for r in range(1, 11):
+        bb_img= pg.Surface((20, 20))
+        pg.draw.circle(bb_img, (255 - 25*r, 25*r, 0), (10, 10), 10)
+        bb_img.set_colorkey((0, 0, 0))
+        bb_imgs.append(bb_img)
 def check_bound(scr_rct: pg.Rect, obj_rct: pg.Rect) -> tuple[bool, bool]:
     """
     オブジェクトが画面内or画面外を判定し，真理値タプルを返す関数
@@ -32,10 +38,10 @@ def main():
    
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
-
-    bb_img= pg.Surface((20, 20))
-    pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
-    bb_img.set_colorkey((0, 0, 0))
+    cr = 255
+    cg = 0
+    
+    bb_img = bb_imgs[0]
     x, y = random.randint(0, 1600), random.randint(0, 900)
     screen.blit(bb_img, [x, y])
     vx, vy = +1, +1
@@ -49,9 +55,10 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return 0
-
+        
         tmr += 1
         avx, avy = vx * accs[min(tmr//1000, 9)], vy*accs[min(tmr//1000,9)]
+        
         key_lst = pg.key.get_pressed() 
         for k, mv in delta.items():
             if key_lst[k]:
@@ -74,7 +81,7 @@ def main():
 
         if kk_rct.colliderect(bb_rct):
             return
-
+        bb_img = bb_imgs[min(tmr//1000, 9)]
         pg.display.update()
         clock.tick(1000)
 
