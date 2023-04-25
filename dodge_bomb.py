@@ -12,12 +12,12 @@ accs = [a for a in range(1, 11)]
 bb_imgs = []
 for r in range(1, 6):
     bb_img= pg.Surface((20, 20))
-    pg.draw.circle(bb_img, (255, 50*r, 0), (10, 10), 10)
+    pg.draw.circle(bb_img, (50*r, 0, 255), (10, 10), 10)
     bb_img.set_colorkey((0, 0, 0))
     bb_imgs.append(bb_img)
 for r in range(1, 6):
     bb_img= pg.Surface((20, 20))
-    pg.draw.circle(bb_img, (255-50*r, 255, 0), (10, 10), 10)
+    pg.draw.circle(bb_img, (255, 0, 255-50*r), (10, 10), 10)
     bb_img.set_colorkey((0, 0, 0))
     bb_imgs.append(bb_img)
 def check_bound(scr_rct: pg.Rect, obj_rct: pg.Rect) -> tuple[bool, bool]:
